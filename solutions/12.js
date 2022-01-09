@@ -1,4 +1,4 @@
-const { Utils } = require('./common');
+const { Utils } = require("../common");
 
 let lastTriangleNumber = 28;
 let maxDivisorCount = 0;

@@ -1,4 +1,4 @@
-const { Utils } = require('./common');
+const { Utils } = require("../common");
 
 let numPrimes = 0;
 for (let i = 2; ; i++) {

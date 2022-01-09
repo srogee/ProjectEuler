@@ -1,4 +1,4 @@
-const { Utils } = require("./common");
+const { Utils } = require("../common");
 
 let max = null;
 

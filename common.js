@@ -52,6 +52,34 @@ class Utils {
     
         return factors;
     }
+
+    static getSumOfArray(array) {
+        let sum = 0;
+        for (const element of array) {
+            sum += element;
+        }
+        return sum;
+    }
+
+    static getMaxInArray(array) {
+        let max = null;
+        for (const element of array) {
+            if (max === null || element > max) {
+                max = element;
+            }
+        }
+        return max;
+    }
+
+    static getMinInArray(array) {
+        let min = null;
+        for (const element of array) {
+            if (min === null || element < min) {
+                min = element;
+            }
+        }
+        return min;
+    }
 }
 
 module.exports = { Utils }
