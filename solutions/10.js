@@ -1,10 +1,10 @@
 const { Utils } = require("../common");
 
 let sum = 0;
-for (let i = 2; i < 2000000; i++) {
-    if (Utils.isPrimeNumber(i)) {
-        sum += i;
+Utils.forRange(2, 2000000, (number) => {
+    if (Utils.isPrimeNumber(number)) {
+        sum += number;
     }
-}
+});
 
 console.log(sum);

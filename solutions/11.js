@@ -21,6 +21,7 @@ const input = [
     01,70,54,71,83,51,54,69,16,92,33,48,61,43,52,01,89,19,67,48,
 ];
 
+// Since array is 2D, we can just get cells in a specific direction by adding/subtracting certain values from the index
 const directionalOffsets = [
     1, // right
     21, // down right
@@ -34,6 +35,7 @@ const directionalOffsets = [
 
 let maxProduct = 0;
 
+// Go through array and find the largest product of 4 adjacent cells
 for (let i = 0; i < input.length; i++) {
     for (const offset of directionalOffsets) {
         const product = calculateProduct(i, offset);
