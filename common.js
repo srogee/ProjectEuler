@@ -1,4 +1,29 @@
+const _ = require('lodash');
+
 class Utils {
+    static getNumberDigits(number) {
+        let array = [...(number.toString())];
+        return array.map(digit => parseInt(digit));
+    }
+
+    static getNthTriangularNumber(n) {
+        return n * (n + 1) / 2;
+    }
+
+    static getNthPentagonalNumber(n) {
+        return n * (3 * n - 1) / 2;
+    }
+
+    static getNthHexagonalNumber(n) {
+        return n * (2 * n - 1);
+    }
+
+    static areArraysEqualIgnoringOrder(array1, array2) {
+        const clone1 = _.clone(array1).sort();
+        const clone2 = _.clone(array2).sort();
+        return _.isEqual(clone1, clone2);
+    }
+
     /**
      * Returns a copy of the specified array without duplicates
      * @param {any[]} array 
@@ -45,6 +70,12 @@ class Utils {
         }
     }
 
+    static makeRange(start, end) {
+        let array = [];
+        Utils.forRange(start, end, num => array.push(num));
+        return array;
+    }
+
     /**
      * Checks if a number is even or not
      * @param {number} number - number to check
@@ -63,8 +94,22 @@ class Utils {
         return !Utils.isEven(number);
     }
 
-    static isPalindrome(str) {
-        return str.split('').reverse().join('') === str;
+    static isPalindrome(value) {
+        if (typeof value === 'number') {
+            value = value.toString();
+        }
+
+        if (value.length < 2) {
+            return true;
+        }
+        
+        for (let i = 0; i < value.length; i++) {
+            if (value[i] !== value[value.length - 1 - i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     static getSumOfSquares(n) {
@@ -85,6 +130,21 @@ class Utils {
 
     static isPrimeNumber(n) {
         let factorCount = 0;
+
+        if (n <= 1) {
+            // Negative numbers and zero and one are not prime
+            return false;
+        }
+
+        if (n == 2 || n == 3) {
+            return true;
+        }
+
+        const nMod6 = n % 6;
+        if (nMod6 !== 1 && nMod6 !== 5) {
+            // Not a prime number because it doesn't fit 6n + 1 or 6n - 1;
+            return false;
+        }
    
         for (let i = 1; i * i <= n; i++) {
             if (n % i === 0) {
@@ -102,6 +162,30 @@ class Utils {
         return true;
     }
 
+    static getBinomialCoefficient(n, k) {
+        return Utils.getFactorial(n) / (Utils.getFactorial(k) * Utils.getFactorial(n - k));
+    }
+
+    static getFactorial(n) {
+        let product = 1;
+        for (let i = n; i > 1; i--) {
+            product *= i;
+        }
+        return product;
+    }
+
+    static getBigFactorial(n) {
+        let product = 1n;
+        for (let i = n; i > 1; i--) {
+            product *= BigInt(i);
+        }
+        return product;
+    }
+
+    static getProperDivisors(n) {
+        return this.calculateFactors(n).filter(value => value < n);
+    }
+
     static calculateFactors(n) {
         const factors = [];
    
@@ -115,6 +199,10 @@ class Utils {
         }
     
         return factors;
+    }
+
+    static getPrimeFactors(n) {
+        return Utils.calculateFactors(n).filter(factor => Utils.isPrimeNumber(factor));
     }
 
     static getSumOfArray(array) {
@@ -146,4 +234,10 @@ class Utils {
     }
 }
 
-module.exports = { Utils }
+class PrimeNumberGenerator {
+    static generate(start, end) {
+        return Utils.makeRange(start, end).filter(number => Utils.isPrimeNumber(number));
+    }
+}
+
+module.exports = { Utils, PrimeNumberGenerator }

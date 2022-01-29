@@ -1,19 +1,31 @@
 const { Utils } = require("../common");
 
-let max = null;
+let componentMin = 100;
+let componentMax = 999;
+let minPossibleProduct = Math.pow(componentMin, 2);
+let maxPossibleProduct = Math.pow(componentMax, 2);
 
-for (let i = 999; i >= 100; i--) {
-    for (let j = 999; j >= 100; j--) {
-        const product = i * j;
-        if (Utils.isPalindrome(product.toString())) {
-            if (max === null || product > max) {
-                max = product;
-            } else if (product < max) {
-                // Further products of i * j will always be smaller if this is true because j decreases
-                break;
-            }
-        }
+for (let i = maxPossibleProduct; i >= minPossibleProduct; i--) {
+    if (Utils.isPalindrome(i) && dividesEvenlyIntoTwoThreeDigitNums(i)) {
+        console.log(i);
+        break;
     }
 }
 
-console.log(max);
+function dividesEvenlyIntoTwoThreeDigitNums(n) {
+    for (let divisor = componentMax; divisor >= componentMin; divisor--) {
+        if (dividesEvenly(n, divisor) && isThreeDigitNumber(divisor) && isThreeDigitNumber(n / divisor)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function dividesEvenly(a, b) {
+    return a % b === 0;
+}
+
+function isThreeDigitNumber(n) {
+    return n.toString().length === 3;
+}
